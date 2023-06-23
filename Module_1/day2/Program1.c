@@ -1,38 +1,25 @@
 #include <stdio.h>
-  
-void decimaltohexadecimal (int num1 )
-{
-    int decimalNumber = num1;
-    
-    printf("Hexadecimal number is:%X\n", decimalNumber);
+#include <stdint.h>
+
+void print_exponent_parts(double x) {
+    uint64_t* ptr = (uint64_t*)&x;
+
+    // Extract the exponent bits
+    uint16_t exponent = (*ptr >> 52) & 0x7FF;
+
+    // Convert exponent to hexadecimal
+    printf("Exponent (Hex): 0x%X\n", exponent);
+
+    // Convert exponent to binary
+    printf("Exponent (Binary): 0b");
+    for (int i = 10; i >= 0; i--) {
+        printf("%d", (exponent >> i) & 1);
+    }
+    printf("\n");
 }
 
-
-void decToBinary(int n)
-{
-	int binaryNum[32];
-
-	int i = 0;
-	while (n > 0) {
-		binaryNum[i] = n % 2;
-		n = n / 2;
-		i++;
-	}
-    printf("Binary number is:");
-
-	for (int j = i - 1; j >= 0; j--)
-		printf("%d", binaryNum[j]);
-        printf("\n");
+int main() {
+    double x = 0.7;
+    print_exponent_parts(x);
+    return 0;
 }
-
-int main()
-{
-    int n;
-    printf("Enter a number\n");
-    scanf("%d\n",&n);
-    
-	decToBinary(n);
-    decimaltohexadecimal(n);
-	return 0;
-}
-
